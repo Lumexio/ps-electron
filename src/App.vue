@@ -1,13 +1,24 @@
 <template>
- <h1>💖 Hello World!</h1>
- <p>Welcome to your Electron application.</p>
- <v-card>
-  <v-card-text>
-   asdsad
-  </v-card-text>
- </v-card>
+ <v-theme-provider>
+  <v-responsive>
+   <v-app>
+    <nav-drawer :items="list" />
+    <v-main>
+     <router-view />
+    </v-main>
+   </v-app>
+  </v-responsive>
+ </v-theme-provider>
 </template>
 
 <script setup>
-console.log('👋 This message is being logged by "App.vue", included via Vite');
+import { ref } from 'vue'
+import NavDrawer from './components/generics/nav-drawer.vue'
+const list = ref([
+ { title: 'home', icon: 'mdi-home', to: '/' },
+ { title: "Productos", icon: "mdi-package-variant-closed", to: "/products" },
+ { title: "Categorias", icon: "mdi-folder-multiple", to: "/category" },
+ { title: "Travesaños", icon: "mdi-package-variant-closed", to: "/crossbars" },
+ { title: 'Racks', icon: 'mdi-package-variant-closed', to: '/racks' },
+]);
 </script>

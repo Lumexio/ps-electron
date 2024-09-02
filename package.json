@@ -32,10 +32,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "electron-squirrel-startup": "^1.0.1",
     "vite-plugin-vuetify": "^2.0.4",
     "vue": "^3.4.38",
-    "vue-router": "^4.4.3",
+    "vue-query": "^1.26.0",
+    "vue-router": "^4.0.13",
     "vuetify": "^3.7.1"
   }
 }

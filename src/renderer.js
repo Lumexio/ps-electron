@@ -31,6 +31,10 @@ import './index.css';
 console.log('👋 This message is being logged by "renderer.js", included via Vite');
 import { createApp } from 'vue';
 import vuetify from './plugins/vuetify';
+import router from './router';
 import App from './App.vue';
 
-createApp(App).use(vuetify).mount('#app');
+import vueQuery from '@vue/query';
+import '@mdi/font/css/materialdesignicons.css';
+
+createApp(App).use(vuetify).use(vueQuery).use(router).mount('#app');

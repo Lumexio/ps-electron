@@ -1,5 +1,7 @@
 <template>
- <div>
-  <h1>Home</h1>
- </div>
+ <v-card>
+  <v-card-text>
+   asdsad
+  </v-card-text>
+ </v-card>
 </template>
