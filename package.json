@@ -1,6 +1,6 @@
 {
-  "name": "ps-electron",
-  "productName": "ps-electron",
+  "name": "stockit",
+  "productName": "stockit",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
