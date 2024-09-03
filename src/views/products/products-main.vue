@@ -3,7 +3,7 @@ import GenericTableCrud from '../../components/generics/generic-table-crud.vue';
 
 import { ref } from 'vue';
 
-let title = ref('Products');
+let title = ref('Productos');
 let columns = ref([
   { id: 0, key: 'name', title: 'Name' },
   { id: 1, key: 'category_name', title: 'Category' },

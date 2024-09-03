@@ -5,7 +5,7 @@
 <script setup>
 import GenericTableCrud from '../../components/generics/generic-table-crud.vue';
 import { ref } from 'vue';
-let title = ref('Rack');
+let title = ref('Racks');
 let columns = ref([
   { id: 0, key: 'id', title: 'ID' },
   { id: 1, key: 'name', title: 'Name' },
