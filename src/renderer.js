@@ -27,13 +27,11 @@
  */
 
 import './index.css';
-
-console.log('👋 This message is being logged by "renderer.js", included via Vite');
 import { createApp } from 'vue';
 import vuetify from './plugins/vuetify';
 import router from './router';
 import App from './App.vue';
-
+import ToastPlugin from 'vue-toast-notification';
 import '@mdi/font/css/materialdesignicons.css';
-
-createApp(App).use(vuetify).use(router).mount('#app');
+import 'vue-toast-notification/dist/theme-sugar.css';
+createApp(App).use(vuetify).use(ToastPlugin).use(router).mount('#app');

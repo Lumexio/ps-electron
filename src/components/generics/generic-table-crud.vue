@@ -2,6 +2,8 @@
 import { ref, defineProps } from 'vue';
 import { useGenericFetchQueries } from '../../api/generic-fetch-querys';
 import ModalGeneric from './modal-generic.vue';
+import { useToast } from 'vue-toast-notification';
+
 let props = defineProps({
   title: String,
   columns: Array,
@@ -11,46 +13,59 @@ let props = defineProps({
   relations: Array,
 });
 
-//const snackbar = useSnackbar();
+const toast = useToast();
 const dialog = ref(null);
 const mode = ref('create');
 let selectedItem = ref(null);
 
-const { fetchQuery, createMutation, updateMutation, deleteMutation } = useGenericFetchQueries(props.endpoint);
+const { fetchQuery, fetchRelatedData, createMutation, updateMutation, deleteMutation } = useGenericFetchQueries(props.endpoint);
 
 const items = ref([]);
 
 async function loadItems() {
-  items.value = await fetchQuery();
+  const { products, categories, racks, crossbars } = await fetchRelatedData();
+
+  switch (props.endpoint) {
+    case 'products':
+      items.value = products.map(product => ({
+        ...product,
+        category_name: categories.find(category => category.id === product.category_id)?.name || '',
+        rack_name: racks.find(rack => rack.id === product.rack_id)?.name || '',
+        crossbar_name: crossbars.find(crossbar => crossbar.id === product.crossbar_id)?.name || '',
+      }));
+      break;
+    case 'categories':
+      items.value = categories;
+      break;
+    case 'racks':
+      items.value = racks;
+      break;
+    case 'crossbars':
+      items.value = crossbars;
+      break;
+    default:
+      items.value = [];
+      break;
+  }
 }
 
 loadItems();
 
 function openModal(modalMode, item = null) {
-
-
   mode.value = modalMode;
   selectedItem.value = item;
   dialog.value.handleOpen();
 }
 
 async function updateQueryhandler() {
-
-
   try {
     await updateMutation(dialog?.value?.valueItem);
     dialog.value.handleClose();
-    // snackbar.add({
-    //   type: 'success',
-    //   text: 'Registro actualizado correctamente',
-    // });
+    toast.success('Registro actualizado correctamente');
     loadItems();
   } catch (error) {
     console.error('Failed to update data:', error);
-    // snackbar.add({
-    //   type: 'error',
-    //   text: 'Se ha producido un error al actualizar el registro',
-    // });
+    toast.error('Se ha producido un error al actualizar el registro');
   }
 }
 
@@ -58,36 +73,23 @@ async function deleteQueryhandler() {
   try {
     await deleteMutation(selectedItem.value.id);
     dialog.value.handleClose();
-    // snackbar.add({
-    //   type: 'success',
-    //   text: 'Registro eliminado correctamente',
-    // });
+    toast.success('Registro eliminado correctamente');
     loadItems();
   } catch (error) {
     console.error('Failed to delete data:', error);
-    // snackbar.add({
-    //   type: 'error',
-    //   text: 'Se ha producido un error al eliminar el registro',
-    // });
+    toast.error('Se ha producido un error al eliminar el registro');
   }
 }
 
 async function createQueryhandler() {
-  console.log(dialog?.value?.valueItem);
   try {
     await createMutation(dialog?.value?.valueItem);
     dialog.value.handleClose();
-    // snackbar.add({
-    //   type: 'success',
-    //   text: 'Registro creado correctamente',
-    // });
+    toast.success('Registro creado correctamente');
     loadItems();
   } catch (error) {
     console.error('Failed to create data:', error);
-    // snackbar.add({
-    //   type: 'error',
-    //   text: 'Se ha producido un error al crear el registro',
-    // });
+    toast.error('Se ha producido un error al crear el registro');
   }
 }
 </script>
@@ -115,11 +117,8 @@ async function createQueryhandler() {
             {{ data[column?.key] }}
           </td>
           <td>
-
             <v-btn @click="openModal('edit', data)" density="comfortable" color="primary" icon="mdi-pencil" />
-
             <v-btn @click="openModal('delete', data)" density="comfortable" color="error" icon="mdi-delete" />
-
           </td>
         </tr>
       </tbody>

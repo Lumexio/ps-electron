@@ -15,7 +15,7 @@
 import { ref } from 'vue'
 import NavDrawer from './components/generics/nav-drawer.vue'
 const list = ref([
- { title: 'home', icon: 'mdi-home', to: '/' },
+ // { title: 'home', icon: 'mdi-home', to: '/' },
  { title: "Productos", icon: "mdi-package-variant-closed", to: "/products" },
  { title: "Categorias", icon: "mdi-folder-multiple", to: "/category" },
  { title: "Travesaños", icon: "mdi-package-variant-closed", to: "/crossbars" },

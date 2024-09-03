@@ -5,9 +5,19 @@ export function useGenericFetchQueries(endpoint) {
     return await getAll(endpoint);
   };
 
-  const createMutation = async (newData) => {
-    console.log(endpoint, newData);
+  const fetchRelatedData = async () => {
+    const products = await getAll('products');
 
+    const categories = await getAll('categories');
+
+    const racks = await getAll('racks');
+    const crossbars = await getAll('crossbars');
+
+
+    return { products, categories, racks, crossbars };
+  };
+
+  const createMutation = async (newData) => {
     // Sanitize the object to ensure it only contains serializable properties
     const sanitizedData = JSON.parse(JSON.stringify(newData));
 
@@ -23,5 +33,5 @@ export function useGenericFetchQueries(endpoint) {
     await remove(endpoint, id);
   };
 
-  return { fetchQuery, createMutation, updateMutation, deleteMutation };
+  return { fetchQuery, fetchRelatedData, createMutation, updateMutation, deleteMutation };
 }
