@@ -1,38 +1,27 @@
-import { customFetch } from './custom-fetch.js';
-import { useRuntimeConfig } from '#app';
-export function useGenericFetchQueries(endpoint, enabled = true) {
-  const queryClient = useQueryClient();
-  const config = useRuntimeConfig();
-  const baseURL = config.public.baseUrl;
+import { getAll, add, update, remove } from './indexeddb';
 
+export function useGenericFetchQueries(endpoint) {
+  const fetchQuery = async () => {
+    return await getAll(endpoint);
+  };
 
-  const fetchQuery = useQuery({
-    queryKey: [endpoint],
-    queryFn: () => customFetch(endpoint, {}, baseURL),
-    enabled: enabled,
-  });
+  const createMutation = async (newData) => {
+    console.log(endpoint, newData);
 
+    // Sanitize the object to ensure it only contains serializable properties
+    const sanitizedData = JSON.parse(JSON.stringify(newData));
 
-  const createMutation = useMutation({
-    mutationFn: (newData) => customFetch(endpoint, { credentials: 'include', method: "POST", body: JSON.stringify(newData), headers: { 'Content-Type': 'application/json' } }, baseURL),
-    onSuccess: () => {
-      queryClient.invalidateQueries([endpoint]);
-    },
-  });
+    await add(endpoint, sanitizedData);
+  };
 
-  const updateMutation = useMutation({
-    mutationFn: (updatedData) => customFetch(`${endpoint}/${updatedData.id}`, { credentials: 'include', method: "PUT", body: JSON.stringify(updatedData), headers: { 'Content-Type': 'application/json' } }, baseURL),
-    onSuccess: () => {
-      queryClient.invalidateQueries([endpoint]);
-    },
-  });
+  const updateMutation = async (updatedData) => {
+    const sanitizedData = JSON.parse(JSON.stringify(updatedData));
+    await update(endpoint, sanitizedData);
+  };
 
-  const deleteMutation = useMutation({
-    mutationFn: (id) => customFetch(`${endpoint}/${id}`, { credentials: 'include', method: "DELETE" }, baseURL),
-    onSuccess: () => {
-      queryClient.invalidateQueries([endpoint]);
-    },
-  });
+  const deleteMutation = async (id) => {
+    await remove(endpoint, id);
+  };
 
   return { fetchQuery, createMutation, updateMutation, deleteMutation };
 }

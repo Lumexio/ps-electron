@@ -34,7 +34,6 @@ import vuetify from './plugins/vuetify';
 import router from './router';
 import App from './App.vue';
 
-import vueQuery from '@vue/query';
 import '@mdi/font/css/materialdesignicons.css';
 
-createApp(App).use(vuetify).use(vueQuery).use(router).mount('#app');
+createApp(App).use(vuetify).use(router).mount('#app');

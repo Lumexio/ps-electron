@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import { useGenericFetchQueries } from '../../api/generic-fetch-querys';
+import ModalGeneric from './modal-generic.vue';
 let props = defineProps({
   title: String,
   columns: Array,
@@ -9,85 +10,86 @@ let props = defineProps({
   endpoint: String,
   relations: Array,
 });
-const snackbar = useSnackbar();
+
+//const snackbar = useSnackbar();
 const dialog = ref(null);
 const mode = ref('create');
 let selectedItem = ref(null);
 
-const { fetchQuery, createMutation, updateMutation, deleteMutation } = useGenericFetchQueries(props.endpoint, !dialog.value?.isOpen);
-const items = ref(fetchQuery.data || []);
+const { fetchQuery, createMutation, updateMutation, deleteMutation } = useGenericFetchQueries(props.endpoint);
 
+const items = ref([]);
 
+async function loadItems() {
+  items.value = await fetchQuery();
+}
+
+loadItems();
 
 function openModal(modalMode, item = null) {
+
+
   mode.value = modalMode;
   selectedItem.value = item;
   dialog.value.handleOpen();
 }
-const queryClient = useQueryClient();
-function updateQueryhandler() {
+
+async function updateQueryhandler() {
 
 
-  updateMutation.mutate(dialog?.value?.valueItem, {
-    onSettled: () => {
-      dialog.value.handleClose();
-      snackbar.add({
-        type: 'success',
-        text: 'Registro actualizado correctamente',
-      });
-      queryClient.invalidateQueries({ queryKey: [props.endpoint] });
-    },
-    onError: (error) => {
-      console.error('Failed to update data:', error);
-      snackbar.add({
-        type: 'error',
-        text: 'Se ha producido un error al actualizar el registro',
-      });
-    }
-  });
+  try {
+    await updateMutation(dialog?.value?.valueItem);
+    dialog.value.handleClose();
+    // snackbar.add({
+    //   type: 'success',
+    //   text: 'Registro actualizado correctamente',
+    // });
+    loadItems();
+  } catch (error) {
+    console.error('Failed to update data:', error);
+    // snackbar.add({
+    //   type: 'error',
+    //   text: 'Se ha producido un error al actualizar el registro',
+    // });
+  }
 }
 
-function deleteQueryhandler() {
-  deleteMutation.mutate(selectedItem.value.id, {
-    onSettled: () => {
-      dialog.value.handleClose();
-      snackbar.add({
-        type: 'success',
-        text: 'Registro eliminado correctamente',
-      });
-      queryClient.invalidateQueries({ queryKey: [props.endpoint] });
-    },
-    onError: (error) => {
-      console.error('Failed to delete data:', error);
-      snackbar.add({
-        type: 'error',
-        text: 'Se ha producido un error al eliminar el registro',
-      });
-    }
-  });
+async function deleteQueryhandler() {
+  try {
+    await deleteMutation(selectedItem.value.id);
+    dialog.value.handleClose();
+    // snackbar.add({
+    //   type: 'success',
+    //   text: 'Registro eliminado correctamente',
+    // });
+    loadItems();
+  } catch (error) {
+    console.error('Failed to delete data:', error);
+    // snackbar.add({
+    //   type: 'error',
+    //   text: 'Se ha producido un error al eliminar el registro',
+    // });
+  }
 }
 
-function createQueryhandler() {
+async function createQueryhandler() {
   console.log(dialog?.value?.valueItem);
-  createMutation.mutate(dialog?.value?.valueItem, {
-    onSettled: () => {
-      dialog.value.handleClose();
-      snackbar.add({
-        type: 'success',
-        text: 'Registro creado correctamente',
-      });
-      queryClient.invalidateQueries({ queryKey: [props.endpoint] });
-    },
-    onError: (error) => {
-      console.error('Failed to update data:', error);
-      snackbar.add({
-        type: 'error',
-        text: 'Se ha producido un error al crear el registro',
-      });
-    }
-  });
+  try {
+    await createMutation(dialog?.value?.valueItem);
+    dialog.value.handleClose();
+    // snackbar.add({
+    //   type: 'success',
+    //   text: 'Registro creado correctamente',
+    // });
+    loadItems();
+  } catch (error) {
+    console.error('Failed to create data:', error);
+    // snackbar.add({
+    //   type: 'error',
+    //   text: 'Se ha producido un error al crear el registro',
+    // });
+  }
 }
-
 </script>
 
 <template>

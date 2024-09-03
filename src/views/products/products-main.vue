@@ -1,12 +1,7 @@
-<template>
-  <generic-table-crud :title="title" :columns="columns" :endpoint="endpoint" :formFields="formFields"
-    :relations="relations" />
-</template>
-
 <script setup>
 import GenericTableCrud from '../../components/generics/generic-table-crud.vue';
 
-import ref from 'vue';
+import { ref } from 'vue';
 
 let title = ref('Products');
 let columns = ref([
@@ -15,7 +10,7 @@ let columns = ref([
   { id: 2, key: 'rack_name', title: 'Rack' },
   { id: 3, key: 'crossbar_name', title: 'Crossbar' },
 ]);
-let endpoint = ref('/api/products');
+let endpoint = ref('products');
 let formFields = ref([
   { key: 'name', label: 'Nombre', value: '', rules: [v => !!v || 'Name is required'] },
   { key: 'quantity', label: 'Quantity', value: '', rules: [v => !!v || 'Quantity is required'] },
@@ -25,12 +20,12 @@ let formFields = ref([
   { key: 'crossbar_name', fk: 'crossbar_id', label: 'Crossbar', value: '', selector: true },
 ]);
 let relations = ref([
-  { key: 'category_id', endpoint: '/api/categories' },
-  { key: 'rack_id', endpoint: '/api/racks' },
-  { key: 'crossbar_id', endpoint: '/api/crossbars' }
+  { key: 'category_id', endpoint: 'categories' },
+  { key: 'rack_id', endpoint: 'racks' },
+  { key: 'crossbar_id', endpoint: 'crossbars' }
 ]);
-
-
-
-
 </script>
+<template>
+  <generic-table-crud :title="title" :columns="columns" :endpoint="endpoint" :formFields="formFields"
+    :relations="relations" />
+</template>
