@@ -10,8 +10,11 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
+        platforms: ['win32'],
         // An URL to an ICO file to use as the application icon (displayed in Control Panel > Programs and Features).
-        iconUrl: 'https://url/to/icon.ico',
+        //iconUrl: 'https://images/icon.ico',
+        noMsi: true,
+        shortcutName: 'stockit',
         // The ICO file to use as the icon for the generated Setup.exe
         setupIcon: './images/icon.ico'
       },
