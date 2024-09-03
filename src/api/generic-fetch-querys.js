@@ -20,7 +20,6 @@ export function useGenericFetchQueries(endpoint) {
   const createMutation = async (newData) => {
     // Sanitize the object to ensure it only contains serializable properties
     const sanitizedData = JSON.parse(JSON.stringify(newData));
-
     await add(endpoint, sanitizedData);
   };
 
