@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, computed } from 'vue';
 import { useGenericFetchQueries } from '../../api/generic-fetch-querys';
 import ModalGeneric from './modal-generic.vue';
 import { useToast } from 'vue-toast-notification';
@@ -17,6 +17,7 @@ const toast = useToast();
 const dialog = ref(null);
 const mode = ref('create');
 let selectedItem = ref(null);
+const search = ref('');
 
 const { fetchQuery, fetchRelatedData, createMutation, updateMutation, deleteMutation } = useGenericFetchQueries(props.endpoint);
 
@@ -51,6 +52,12 @@ async function loadItems() {
 
 loadItems();
 
+const handleClear = () => {
+  props.formFields.forEach((field) => {
+    field.value = '';
+  });
+}
+
 function openModal(modalMode, item = null) {
   mode.value = modalMode;
   selectedItem.value = item;
@@ -61,6 +68,7 @@ async function updateQueryhandler() {
   try {
     await updateMutation(dialog?.value?.valueItem);
     dialog.value.handleClose();
+    handleClear();
     toast.success('Registro actualizado correctamente');
     loadItems();
   } catch (error) {
@@ -86,20 +94,35 @@ async function createQueryhandler() {
     await createMutation(dialog?.value?.valueItem);
     dialog.value.handleClose();
     toast.success('Registro creado correctamente');
+    handleClear();
     loadItems();
   } catch (error) {
     console.error('Failed to create data:', error);
     toast.error('Se ha producido un error al crear el registro');
   }
 }
+
+const filteredItems = computed(() => {
+  if (!search.value) {
+    return items.value;
+  }
+  return items.value.filter(item => {
+    return props.columns.some(column => {
+      return String(item[column.key]).toLowerCase().includes(search.value.toLowerCase());
+    });
+  });
+});
 </script>
 
 <template>
   <div>
-    <v-toolbar class="pa-2">
+    <v-toolbar class="ma-1">
       <h2>{{ props.title }}</h2>
       <v-spacer></v-spacer>
-      <v-btn @click="openModal('create')" color="primary" variant="tonal">Crear</v-btn>
+      <v-text-field max-width="15rem" focused density='compact' v-model="search" label="Search"
+        prepend-inner-icon="mdi-magnify" variant="outlined" hide-details single-line></v-text-field>
+
+      <v-btn class="ml-2 mr-2" @click="openModal('create')" color="primary" variant="tonal">Crear</v-btn>
     </v-toolbar>
 
     <v-table loading="true" fixed-header>
@@ -112,7 +135,7 @@ async function createQueryhandler() {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="data in items" :key="data?.id">
+        <tr v-for="data in filteredItems" :key="data?.id">
           <td v-for="column in props.columns" :key="column?.id">
             {{ data[column?.key] }}
           </td>

@@ -5,10 +5,10 @@ import { ref } from 'vue';
 
 let title = ref('Productos');
 let columns = ref([
-  { id: 0, key: 'name', title: 'Name' },
-  { id: 1, key: 'category_name', title: 'Category' },
+  { id: 0, key: 'name', title: 'Nombre' },
+  { id: 1, key: 'category_name', title: 'Categoria' },
   { id: 2, key: 'rack_name', title: 'Rack' },
-  { id: 3, key: 'crossbar_name', title: 'Crossbar' },
+  { id: 3, key: 'crossbar_name', title: 'Travesaño' },
 ]);
 let endpoint = ref('products');
 let formFields = ref([
