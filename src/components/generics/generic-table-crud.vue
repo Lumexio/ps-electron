@@ -98,7 +98,7 @@ async function createQueryhandler() {
     loadItems();
   } catch (error) {
     console.error('Failed to create data:', error);
-    toast.error('Se ha producido un error al crear el registro');
+    toast.error('Se ha producido un error al create el registro');
   }
 }
 
@@ -122,7 +122,7 @@ const filteredItems = computed(() => {
       <v-text-field max-width="15rem" focused density='compact' v-model="search" label="Search"
         prepend-inner-icon="mdi-magnify" variant="outlined" hide-details single-line></v-text-field>
 
-      <v-btn class="ml-2 mr-2" @click="openModal('create')" color="primary" variant="tonal">Crear</v-btn>
+      <v-btn class="ml-2 mr-2" @click="openModal('create')" color="primary" variant="tonal">Create</v-btn>
     </v-toolbar>
 
     <v-table loading="true" fixed-header>
@@ -151,10 +151,10 @@ const filteredItems = computed(() => {
       :relations="props?.relations">
       <template #buttonAction>
         <v-btn v-if="mode === 'create'" @click="createQueryhandler" color="primary" variant="tonal">
-          Guardar <v-icon>mdi-check</v-icon>
+          Save <v-icon>mdi-check</v-icon>
         </v-btn>
         <v-btn v-if="mode === 'edit'" @click="updateQueryhandler" color="primary" variant="tonal">
-          Guardar <v-icon>mdi-check</v-icon>
+          Save <v-icon>mdi-check</v-icon>
         </v-btn>
         <v-btn v-if="mode === 'delete'" @click="deleteQueryhandler" color="error" variant="tonal">
           Confirmar <v-icon>mdi-check</v-icon>

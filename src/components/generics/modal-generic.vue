@@ -107,7 +107,7 @@ defineExpose({
       </v-card-text>
       <v-card-actions class="flex justify-end gap-4">
         <v-spacer></v-spacer>
-        <v-btn @click="handleClose" variant="tonal" color="info">Cerrar</v-btn>
+        <v-btn @click="handleClose" variant="tonal" color="info">Close</v-btn>
         <slot name="buttonAction"></slot>
       </v-card-actions>
     </v-card>

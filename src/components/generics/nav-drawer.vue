@@ -4,7 +4,8 @@
     <v-toolbar-title>
       STOCKIT
     </v-toolbar-title>
-
+    <v-spacer></v-spacer>
+    <v-switch :prepend-icon="iconTheme" class="mr-3" @click="setDark" v-model="darkMode" hide-details inset></v-switch>
   </v-app-bar>
   <v-navigation-drawer app v-model="drawer">
     <v-list>
@@ -14,16 +15,37 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
 <script setup>
-import { ref, defineProps } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { ref, defineProps, onMounted, computed } from 'vue'
+import { useStore } from '../../store'
+
+const store = useStore();
 const props = defineProps({
   items: Array,
 });
 
 let drawer = ref(false);
-function accountHandler() {
-  router.push('/account');
+let iconTheme = computed(() => (darkMode.value ? 'mdi-moon-waning-crescent' : 'mdi-white-balance-sunny'));
+const darkMode = computed({
+  get() {
+    return store.hasDarkMode === 'dark';
+  },
+  set(value) {
+    store.setDarkMode(value ? 'dark' : 'light');
+  }
+});
+
+onMounted(() => {
+  hasDarkMode();
+});
+
+function setDark() {
+  store.setDarkMode(darkMode.value ? 'light' : 'dark');
+
+}
+
+function hasDarkMode() {
+  return store.hasDarkMode === 'dark';
 }
 </script>

@@ -12,8 +12,8 @@ let columns = ref([
 ]);
 let endpoint = ref('racks');
 let formFields = ref([
-  { key: 'name', label: 'Nombre', value: '', rules: [v => !!v || 'Name is required'] },
-  { key: 'description', label: 'Descripción', value: '', rules: [v => !!v || 'Description is required'] },
+  { key: 'name', label: 'Name', value: '', rules: [v => !!v || 'Name is required'] },
+  { key: 'description', label: 'Description', value: '', rules: [v => !!v || 'Description is required'] },
 ]);
 
 
