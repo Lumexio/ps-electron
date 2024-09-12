@@ -24,25 +24,25 @@ const { fetchQuery, fetchRelatedData, createMutation, updateMutation, deleteMuta
 const items = ref([]);
 
 async function loadItems() {
-  const { products, categories, racks, crossbars } = await fetchRelatedData();
+  const { products, categories, shelves, racks } = await fetchRelatedData();
 
   switch (props.endpoint) {
     case 'products':
       items.value = products.map(product => ({
         ...product,
         category_name: categories.find(category => category.id === product.category_id)?.name || '',
+        shelve_name: shelves.find(shelve => shelve.id === product.shelve_id)?.name || '',
         rack_name: racks.find(rack => rack.id === product.rack_id)?.name || '',
-        crossbar_name: crossbars.find(crossbar => crossbar.id === product.crossbar_id)?.name || '',
       }));
       break;
     case 'categories':
       items.value = categories;
       break;
+    case 'shelves':
+      items.value = shelves;
+      break;
     case 'racks':
       items.value = racks;
-      break;
-    case 'crossbars':
-      items.value = crossbars;
       break;
     default:
       items.value = [];

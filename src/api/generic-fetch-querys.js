@@ -10,11 +10,11 @@ export function useGenericFetchQueries(endpoint) {
 
     const categories = await getAll('categories');
 
+    const shelves = await getAll('shelves');
     const racks = await getAll('racks');
-    const crossbars = await getAll('crossbars');
 
 
-    return { products, categories, racks, crossbars };
+    return { products, categories, shelves, racks };
   };
 
   const createMutation = async (newData) => {

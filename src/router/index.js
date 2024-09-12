@@ -11,9 +11,9 @@ const routes = [
   component: () => import('../views/categorys/category-main.vue')
  },
  {
-  path: '/crossbars',
-  name: 'Crossbar',
-  component: () => import('../views/crossbars/crossbar-main.vue')
+  path: '/racks',
+  name: 'Rack',
+  component: () => import('../views/racks/rack-main.vue')
  },
  {
   path: '/products',
@@ -21,9 +21,9 @@ const routes = [
   component: () => import('../views/products/products-main.vue')
  },
  {
-  path: '/racks',
-  name: 'Rack',
-  component: () => import('../views/racks/rack-main.vue')
+  path: '/shelves',
+  name: 'Shelve',
+  component: () => import('../views/shelves/shelve-main.vue')
  },
 ]
 const router = createRouter({

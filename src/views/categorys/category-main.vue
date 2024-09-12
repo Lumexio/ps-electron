@@ -5,15 +5,15 @@
 <script setup>
 import GenericTableCrud from '../../components/generics/generic-table-crud.vue';
 import { ref } from 'vue';
-let title = ref('Categorías');
+let title = ref('Categories');
 let columns = ref([
   { id: 0, key: 'id', title: 'ID' },
-  { id: 1, key: 'name', title: 'Nombre' },
+  { id: 1, key: 'name', title: 'Name' },
 ]);
 let endpoint = ref('categories');
 let formFields = ref([
-  { key: 'name', label: 'Nombre', value: '', rules: [v => !!v || 'Name is required'] },
-  { key: 'description', label: 'Descripción', value: '', rules: [v => !!v || 'Description is required'] },
+  { key: 'name', label: 'Name', value: '', rules: [v => !!v || 'Name is required'] },
+  { key: 'description', label: 'Description', value: '', rules: [v => !!v || 'Description is required'] },
 ]);
 
 

@@ -7,8 +7,8 @@ let title = ref('Productos');
 let columns = ref([
   { id: 0, key: 'name', title: 'Nombre' },
   { id: 1, key: 'category_name', title: 'Categoria' },
-  { id: 2, key: 'rack_name', title: 'Rack' },
-  { id: 3, key: 'crossbar_name', title: 'Travesaño' },
+  { id: 2, key: 'shelve_name', title: 'Shelve' },
+  { id: 3, key: 'rack_name', title: 'Rack' },
 ]);
 let endpoint = ref('products');
 let formFields = ref([
@@ -16,13 +16,13 @@ let formFields = ref([
   { key: 'quantity', label: 'Quantity', value: '', rules: [v => !!v || 'Quantity is required'] },
   { key: 'description', label: 'Descripción', value: '', rules: [v => !!v || 'Description is required'] },
   { key: 'category_name', fk: 'category_id', label: 'Category', value: '', selector: true },
+  { key: 'shelve_name', fk: 'shelve_id', label: 'Shelve', value: '', selector: true },
   { key: 'rack_name', fk: 'rack_id', label: 'Rack', value: '', selector: true },
-  { key: 'crossbar_name', fk: 'crossbar_id', label: 'Crossbar', value: '', selector: true },
 ]);
 let relations = ref([
   { key: 'category_id', endpoint: 'categories' },
-  { key: 'rack_id', endpoint: 'racks' },
-  { key: 'crossbar_id', endpoint: 'crossbars' }
+  { key: 'shelve_id', endpoint: 'shelves' },
+  { key: 'rack_id', endpoint: 'racks' }
 ]);
 </script>
 <template>

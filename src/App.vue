@@ -1,5 +1,5 @@
 <template>
- <v-theme-provider>
+ <v-theme-provider :theme="isDark">
   <v-responsive>
    <v-app>
     <nav-drawer :items="list" />
@@ -14,11 +14,12 @@
 <script setup>
 import { ref } from 'vue'
 import NavDrawer from './components/generics/nav-drawer.vue'
+let isDark = ref('dark');
 const list = ref([
  // { title: 'home', icon: 'mdi-home', to: '/' },
- { title: "Productos", icon: "mdi-package-variant-closed", to: "/products" },
- { title: "Categorias", icon: "mdi-folder-multiple", to: "/category" },
- { title: "Travesaños", icon: "mdi-package-variant-closed", to: "/crossbars" },
- { title: 'Racks', icon: 'mdi-package-variant-closed', to: '/racks' },
+ { title: "Products", icon: "mdi-package-variant-closed", to: "/products" },
+ { title: "Categories", icon: "mdi-folder-multiple", to: "/category" },
+ { title: "Racks", icon: "mdi-package-variant-closed", to: "/racks" },
+ { title: 'Shelves', icon: 'mdi-package-variant-closed', to: '/shelves' },
 ]);
 </script>
