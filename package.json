@@ -1,5 +1,5 @@
 {
-  "name": "stockit",
+  "name": "STOCKMACHINE",
   "version": "1.0.0",
   "description": "My Electron application description",
   "author": {
@@ -45,5 +45,5 @@
   },
   "keywords": [],
   "license": "MIT",
-  "productName": "stockit"
+  "productName": "STOCKMACHINE"
 }

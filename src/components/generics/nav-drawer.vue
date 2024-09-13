@@ -2,7 +2,7 @@
   <v-app-bar app>
     <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     <v-toolbar-title>
-      STOCKIT
+      STOCKMACHINE
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-switch :prepend-icon="iconTheme" class="mr-3" @click="setDark" v-model="darkMode" hide-details inset></v-switch>

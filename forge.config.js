@@ -14,7 +14,7 @@ module.exports = {
         // An URL to an ICO file to use as the application icon (displayed in Control Panel > Programs and Features).
         //iconUrl: 'https://images/icon.ico',
         noMsi: true,
-        shortcutName: 'stockit',
+        shortcutName: 'STOCKMACHINE',
         // The ICO file to use as the icon for the generated Setup.exe
         setupIcon: './images/icon.ico'
       },
