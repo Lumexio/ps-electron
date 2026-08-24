@@ -297,5 +297,19 @@ export default {
     "entity": "エンティティ",
     "quantityBefore": "変更前",
     "quantityAfter": "変更後"
-  }
+  },
+  "": {
+    "": "TODO: "
+  },
+  "refreshData": "TODO: refreshData",
+  "sync_queue": "TODO: sync_queue",
+  "a": "TODO: a",
+  "login": "TODO: login",
+  "offline": "TODO: offline",
+  "eventBus": "TODO: eventBus",
+  "done": "TODO: done",
+  "success": "TODO: success",
+  "closed": "TODO: closed",
+  "canvas": "TODO: canvas",
+  "2d": "TODO: 2d"
 };
